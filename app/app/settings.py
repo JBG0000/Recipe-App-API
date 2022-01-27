@@ -76,8 +76,12 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',  #포스트그래스 데베 사용
+        #아래 항목들은 도커 컴포즈 파일을 바꾸면 쉽게 내용 바꿀 수 있음(환경변수~)
+        'HOST': os.environ.get('DB_HOST'),  #도커컴포즈파일 작성할때 썼던거 다 갖고옴(환경변수로 가져오는 방식)
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASS'),
     }
 }
 
