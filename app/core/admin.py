@@ -31,3 +31,4 @@ class UserAdmin(BaseUserAdmin):
     )
 
 admin.site.register(models.User, UserAdmin) #어드민 사이트에 등록해서 눈으로 테이블확인가능
+admin.site.register(models.Tag)

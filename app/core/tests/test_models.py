@@ -2,6 +2,13 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model  #이걸로 유저 모델 가져오면 참 쉽대
 
+from core import models
+
+
+def sample_user(email='test@londonappdev.com', password='testpass'):
+    """Create a sample user"""
+    return get_user_model().objects.create_user(email, password)
+
 
 class ModelTests(TestCase):
 
@@ -44,3 +51,12 @@ class ModelTests(TestCase):
 
         self.assertTrue(user.is_superuser)  #PermissionsMixin에 is_superuser 필드 존재
         self.assertTrue(user.is_staff)
+
+    def test_tag_str(self):
+        """Test the tag string representation"""
+        tag = models.Tag.objects.create(
+            user=sample_user(),
+            name='Vegan'    #비건 태그
+        )
+
+        self.assertEqual(str(tag), tag.name)

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
     PermissionsMixin    #기본 사용자 관리자 및 권한.. 등등 임포트
 
+from django.conf import settings
 
 #관리자 생성 클래스
 class UserManager(BaseUserManager):
@@ -39,3 +40,15 @@ class User(AbstractBaseUser, PermissionsMixin): #
     objects = UserManager() #객체에 대한 새 사용자 관리자 생성
 
     USERNAME_FIELD = 'email'    #사용자 이름으로 이메일주소를 사용할 수 있도록 정의
+
+
+class Tag(models.Model):
+    """Tag to be used for a recipe"""
+    name = models.CharField(max_length=255)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return self.name
